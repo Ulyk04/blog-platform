@@ -7,8 +7,10 @@ import Grid from '@mui/material/Grid';
 import PostAdd from '@mui/icons-material/PostAdd'
 import Home from '@mui/icons-material/Home';
 import AccountBox from '@mui/icons-material/AccountBox'
-
-
+import ProfileCard from './ProfileCard'
+import { MediaControlCard } from './ProfileCard';
+import { PostCliend } from './ProfileCard';
+import Pizza from '../images/pizza.jpeg'
 
 const NAVIGATION = [
   {
@@ -93,16 +95,27 @@ export default function DashboardLayoutBasic(props) {
     >
       <DashboardLayout>
         <PageContainer>
-          <Grid container spacing={1}>
-            <Grid size={5} />
-            <Grid size={12}>
-              <Skeleton height={14} />
-            </Grid>
-            <Grid size={12}>
-              <Skeleton height={14} />
-            </Grid>
+          <Grid container spacing={5}>
+              <Grid size={25}>
+                {
+                router.pathname === '/profile' && (
+                  <ProfileCard />
+                )
+                }
+              </Grid>
+              <Grid size={11}>
+                {
+                  router.pathname === '/profile' && (
+                    <MediaControlCard/>
+                  )
+                }
+              </Grid>
             <Grid size={4}>
-              <Skeleton height={100} />
+                {
+                  router.pathname === '/profile' && (
+                    <PostCliend image={Pizza} title={'About Pizza'} description={'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat, nemo? Nisi excepturi non sint pariatur, quis tempore, quod quam cupiditate aperiam commodi aliquid aliquam adipisci odit quos repudiandae temporibus accusantium?'} />
+                  )
+                }
             </Grid>
             <Grid size={8}>
               <Skeleton height={100} />
@@ -128,9 +141,10 @@ export default function DashboardLayoutBasic(props) {
               <Skeleton height={100} />
             </Grid>
           </Grid>
-         
+            
         </PageContainer>
       </DashboardLayout>
     </AppProvider>
   );
 }
+
