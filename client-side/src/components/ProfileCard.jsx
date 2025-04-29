@@ -13,6 +13,8 @@ import Profile from '../images/men.jpg';
 import Live from '../images/live-from-space.jpg';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from  '@mui/icons-material/Share';
+import Tooltip from '@mui/material/Tooltip';
+import DeleteIcon from '@mui/icons-material/Delete'
 
 export default function MediaCard() {
   return (
@@ -97,6 +99,11 @@ export function PostCliend({image , title , description}) {
                 <IconButton aria-label='share' >
                     <ShareIcon />
                 </IconButton>
+                <Tooltip title="Delete">
+                  <IconButton>
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
             </CardActions>
         </Card>
     )
