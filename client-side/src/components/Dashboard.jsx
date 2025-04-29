@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { createTheme, styled } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { PageContainer } from '@toolpad/core/PageContainer';
 import Grid from '@mui/material/Grid';
-import PostAdd from '@mui/icons-material/PostAdd'
 import Home from '@mui/icons-material/Home';
 import AccountBox from '@mui/icons-material/AccountBox'
 import ProfileCard from './ProfileCard'
 import { MediaControlCard } from './ProfileCard';
 import { PostCliend } from './ProfileCard';
 import Pizza from '../images/pizza.jpeg'
+import PostButton from './PostButton'
 
 const NAVIGATION = [
   {
@@ -21,11 +21,6 @@ const NAVIGATION = [
     segment: 'home',
     title: 'Home',
     icon: <Home />,
-  },
-  {
-    segment: 'posts',
-    title: 'Posts',
-    icon: <PostAdd />,
   },
   {
     kind: 'divider',
@@ -71,12 +66,6 @@ function useDemoRouter(initialPath) {
   return router;
 }
 
-const Skeleton = styled('div')(({ theme, height }) => ({
-  backgroundColor: theme.palette.action.hover,
-  borderRadius: theme.shape.borderRadius,
-  height,
-  content: '" "',
-}));
 
 export default function DashboardLayoutBasic(props) {
   const { window } = props;
@@ -117,28 +106,19 @@ export default function DashboardLayoutBasic(props) {
                   )
                 }
             </Grid>
-            <Grid size={8}>
-              <Skeleton height={100} />
+            <Grid size={25} >
+              {
+                router.pathname === '/home' && (
+                  <PostButton />
+                )
+              }
             </Grid>
-
-            <Grid size={12}>
-              <Skeleton height={150} />
-            </Grid>
-            <Grid size={12}>
-              <Skeleton height={14} />
-            </Grid>
-
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={3}>
-              <Skeleton height={100} />
+            <Grid size={25}>
+              {
+                router.pathname === '/home' && (
+                  <PostCliend image={Pizza} title={'About Pizza'} description={'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat, nemo? Nisi excepturi non sint pariatur, quis tempore, quod quam cupiditate aperiam commodi aliquid aliquam adipisci odit quos repudiandae temporibus accusantium?'} />
+                )
+              }
             </Grid>
           </Grid>
             
