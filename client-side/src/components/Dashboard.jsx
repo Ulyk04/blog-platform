@@ -11,6 +11,7 @@ import { MediaControlCard } from './ProfileCard';
 import { PostCliend } from './ProfileCard';
 import Pizza from '../images/pizza.jpeg'
 import PostButton from './PostButton'
+import MainFeed from './MainFeed'
 
 const NAVIGATION = [
   {
@@ -117,6 +118,13 @@ export default function DashboardLayoutBasic(props) {
               {
                 router.pathname === '/home' && (
                   <PostCliend image={Pizza} title={'About Pizza'} description={'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat, nemo? Nisi excepturi non sint pariatur, quis tempore, quod quam cupiditate aperiam commodi aliquid aliquam adipisci odit quos repudiandae temporibus accusantium?'} />
+                )
+              }
+            </Grid>
+            <Grid>
+              {
+                router.pathname === '/home' && (
+                  <MainFeed />
                 )
               }
             </Grid>
