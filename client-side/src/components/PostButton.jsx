@@ -7,8 +7,22 @@ import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Stack from '@mui/material/Stack';
 import CreatePostForm from './CreatePostForm'; 
+import {useNavigate} from 'react-router-dom'
+
+
+
+
+
 
 export default function PostButton({ userEmail }) {
+
+  const handleLogOut = () => {
+   
+    alert('You log out from you account')
+    navigate('/')
+  }
+
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
   const handleOpenDialog = () => {
@@ -34,7 +48,7 @@ export default function PostButton({ userEmail }) {
           variant="contained"
           endIcon={<LogoutIcon />}
           size="large"
-          onClick={() => alert('Logout logic goes here')}
+          onClick={() => handleLogOut()}
         >
           Log out
         </Button>
