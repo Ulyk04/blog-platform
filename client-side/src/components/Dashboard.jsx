@@ -12,6 +12,7 @@ import { PostCliend } from './ProfileCard';
 import Pizza from '../images/pizza.jpeg'
 import PostButton from './PostButton'
 import MainFeed from './MainFeed'
+import FilredPosts from './FiltredPosts';
 
 const NAVIGATION = [
   {
@@ -103,7 +104,7 @@ export default function DashboardLayoutBasic(props) {
             <Grid size={4}>
                 {
                   router.pathname === '/profile' && (
-                    <PostCliend image={Pizza} title={'About Pizza'} description={'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat, nemo? Nisi excepturi non sint pariatur, quis tempore, quod quam cupiditate aperiam commodi aliquid aliquam adipisci odit quos repudiandae temporibus accusantium?'} />
+                    <FilredPosts />
                   )
                 }
             </Grid>
@@ -128,6 +129,7 @@ export default function DashboardLayoutBasic(props) {
                 )
               }
             </Grid>
+
           </Grid>
             
         </PageContainer>
