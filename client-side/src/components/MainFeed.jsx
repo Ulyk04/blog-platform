@@ -30,6 +30,15 @@ export default function MainFeed() {
     fetchPosts();
   }, []);
 
+  const ownPosts = () => {
+    const mail = localStorage.getItem('userEmail');
+
+    const filtredPosts = posts.filter(post => post.email === mail)
+
+    return filtredPosts;
+    
+  }
+
   return (
     <Box sx={{ padding: 4 }}>
       <Typography variant="h4" gutterBottom>
