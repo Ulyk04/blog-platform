@@ -9,24 +9,62 @@ import IconButton from '@mui/material/IconButton';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
-import Profile from '../images/men.jpg';
+import Profile from '../images/profile.jpg';
 import Live from '../images/live-from-space.jpg';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from  '@mui/icons-material/Share';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete'
 
+
+
+
 export default function MediaCard() {
+
+  const [email , setEmail] = React.useState('');
+  const [profileImage , setProfileImage] = React.useState(Profile);
+
+  const inputRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const savedEmail = localStorage.getItem('userEmail')
+    if(savedEmail){
+      setEmail(savedEmail);
+    }
+  } , []);
+
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if(file) {
+      const reader = new FileReader();
+
+      reader.onloadend=() => {
+        setProfileImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   return (
     <Card sx={{ maxWidth: 1050 }}>
+
       <CardMedia
-        sx={{ height: 500 }}
-        image={Profile}
-        title="green iguana"
+        sx={{ height: 500 , cursor: 'pointer' }}
+        image={profileImage}
+        title="Profile"
+        onClick = {() => inputRef.current?.click()}
+      />
+      <input
+        ref={inputRef}
+        type='file'
+        accept='image/*'
+        style={{display: 'none'}}
+        onChange={handleImageChange}
       />
       <CardContent>
         <Typography gutterBottom variant="h3" component="div">
-          John Backus
+          {email ? email : 'Your email '}
         </Typography>
         <Typography variant="h6" sx={{ color: 'text.secondary' }}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam molestiae saepe nesciunt dolore? Quod deleniti itaque culpa odit placeat ut atque aliquid eos dolorem quam delectus repudiandae error, deserunt quibusdam!
