@@ -43,6 +43,7 @@ const SignUpPage = () => {
             });
             alert(res.data.message)
             navigate('/home')
+            localStorage.setItem('userEmail' , email)
         } catch (error) {
             alert(error.response?.data?.message || 'Sign Up Error');
         }
