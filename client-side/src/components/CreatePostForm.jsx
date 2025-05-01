@@ -12,11 +12,12 @@ export default function CreatePostForm({ userEmail }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState(null);
+  const [email , setEmail] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!title || !content || !image) {
+    if (!title || !content || !image || !email) {
       return alert('Please fill in all fields and select an image.');
     }
 
@@ -24,7 +25,7 @@ export default function CreatePostForm({ userEmail }) {
     formData.append('title', title);
     formData.append('content', content);
     formData.append('image', image);
-    formData.append('email', userEmail); 
+    formData.append('email', email); 
 
     try {
       const response = await axios.post('http://localhost:5000/posts', formData);
@@ -51,6 +52,14 @@ export default function CreatePostForm({ userEmail }) {
           fullWidth
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+        />
+
+        <TextField
+          label='Email'
+          variant='outlined'
+          fullWidth
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <TextField
