@@ -20,6 +20,8 @@ export default function PostButton({ userEmail }) {
    
     alert('You log out from you account')
     navigate('/')
+    localStorage.removeItem('isAuth');
+    localStorage.removeItem('userEmail');
   }
 
   const navigate = useNavigate();
