@@ -59,6 +59,7 @@ const LoginPage = () => {
             alert(res.data.message)
             navigate('/home')
             localStorage.setItem('userEmail' , email)
+            localStorage.setItem('isAuth' , true);
         } catch (error) {
             alert(error.response?.data?.message || 'Login Error');
         }
