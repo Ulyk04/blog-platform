@@ -54,6 +54,9 @@ export default function FilredPosts() {
                 image={post.image}
                 title={post.title}
                 description={post.content}
+                ownerEmail={post.email}
+                postId={post.id}
+                onDelete={fetchPosts}
               />
             </Grid>
           ))}
