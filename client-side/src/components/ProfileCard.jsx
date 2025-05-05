@@ -21,6 +21,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import axios from 'axios';
 
 
 
@@ -41,20 +42,21 @@ export default function MediaCard() {
       setEmail(savedEmail);
     }
 
-    const saveImage = localStorage.getItem('profilImage');
+    const saveImage = localStorage.getItem(`profilImage_${savedEmail}`);
     if(saveImage){
       setProfileImage(saveImage);
     }
 
-    const saveDesc = localStorage.getItem('profilDesc');
+    const saveDesc = localStorage.getItem(`profilDesc_${savedEmail}`);
     if(saveDesc){
       setDescription(saveDesc);
     }
   } , []);
 
+  const gmail = localStorage.getItem('userEmail')
 
   const handleSave = () => {
-    localStorage.setItem('profilDesc' , description);
+    localStorage.setItem(`profilDesc_${gmail}` , description);
     setOpen(false);
   }
 
@@ -65,7 +67,7 @@ export default function MediaCard() {
 
       reader.onloadend=() => {
         setProfileImage(reader.result);
-        localStorage.setItem('profilImage' , reader.result)
+        localStorage.setItem(`profilImage_${gmail}` , reader.result)
       };
       reader.readAsDataURL(file);
     }
@@ -156,13 +158,31 @@ export function MediaControlCard() {
     );
   }
 
-export function PostCliend({image , title , description}) {
+export function PostCliend({image , title , description , ownerEmail , postId , onDelete}) {
 
   const [likes , setLikes] = React.useState(0);
   const [share , setShare] = React.useState(false);
+  const currentUserEmail = localStorage.getItem('userEmail');
 
   const storageKey = `likes_${title.replace(/\s+/g, '_').toLowerCase()}`
   const postUrl = `http://yourblog.com/posts/${title.replace(/\s+/g, '-').toLowerCase()}`
+
+  const handleDelete = async () => {
+    const confirm = window.confirm('Are you sure to delete this post?');
+    if(!confirm) return;
+
+    try{
+      console.log('Deleting the post' , postId)
+      await axios.delete(`http://localhost:5000/posts/${postId}`, {
+        data: { email: ownerEmail } 
+      });
+      alert('Post deleted successfully');
+      onDelete();
+    } catch(err){
+      alert('Error deleting post');
+      console.error(err);
+    }
+  };
 
   React.useEffect(() => {
     const savedLikes = localStorage.getItem(storageKey);
@@ -225,7 +245,7 @@ export function PostCliend({image , title , description}) {
 
 
                 <Tooltip title="Delete">
-                  <IconButton>
+                  <IconButton onClick={handleDelete} >
                     <DeleteIcon />
                   </IconButton>
                 </Tooltip>
@@ -233,7 +253,7 @@ export function PostCliend({image , title , description}) {
 
             </CardActions>
             <Dialog open={share} onClose={handleShareClose}>
-              <DialogTitle>Поделиться постом</DialogTitle>
+              <DialogTitle>Share</DialogTitle>
               <DialogContent>
                 <TextField
                   fullWidth
@@ -242,8 +262,8 @@ export function PostCliend({image , title , description}) {
                 />
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleShareClose}>Закрыть</Button>
-                <Button onClick={handleCopyLink}>Скопировать ссылку</Button>
+                <Button onClick={handleShareClose}>Close</Button>
+                <Button onClick={handleCopyLink}>Copy the URL</Button>
               </DialogActions>
             </Dialog>
         </Card>
