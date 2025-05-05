@@ -83,6 +83,18 @@ export default function DashboardLayoutBasic(props) {
       router={router}
       theme={demoTheme}
       window={demoWindow}
+      branding={{
+        logo: (
+          <div style={{display: 'flex' , alignItems:'center' , gap: 8}} >
+            <img 
+                src='/trias.png'
+                alt='Trias logo'
+                style={{minHeight: 100}}
+            />  
+            <span style={{fontSize: 20 , fontWeight: 'bold'}} >Trias</span>
+          </div>
+        ),
+      }}
     >
       <DashboardLayout>
         <PageContainer>
