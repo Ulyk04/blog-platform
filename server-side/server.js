@@ -112,6 +112,36 @@ app.get('/posts', (req, res) => {
     res.json(posts);
   });
 
+app.delete('/posts/:id' , (req , res) => {
+  const postId = parseInt(req.params.id , 10);
+  const {email} = req.body;
+
+  const posts = loadPosts();
+  const postIndex = posts.findIndex(post => post.id === postId);
+
+  if(postIndex === -1){
+    return res.status(404).json({message: 'Post not found'});
+  }
+
+  const post = posts[postIndex];
+
+  if(post.email !== email){
+    return res.status(403).json({message: 'You can delete only your own posts'});
+  }
+
+  if(post.image){
+    const imagePath = path.join(__dirname , post.image);
+    if(fs.existsSync(imagePath)){
+      fs.unlinkSync(imagePath);
+    }
+  }
+
+  posts.splice(postIndex , 1);
+  savePosts(posts);
+
+  res.status(200).json({message: 'Post deleted succefully'})
+})
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
