@@ -127,10 +127,10 @@ export function MediaControlCard({ email }) {
   React.useEffect(() => {
     if (!email) return;
     const fetchSavedSong = async () => {
-      const response = await fetch(`http://localhost:5000/get-song?email=${email}`);
+      const response = await fetch(`https://blog-platform-2-ts3e.onrender.com/get-song?email=${email}`);
       if (response.ok) {
         const data = await response.json();
-        setSong(data.song); // теперь отобразим эту песню ниже
+        setSong(data.song); 
       }
     };
     fetchSavedSong();
@@ -149,7 +149,7 @@ export function MediaControlCard({ email }) {
       };
       setSong(selectedSong);
 
-      await fetch('http://localhost:5000/set-song', {
+      await fetch('https://blog-platform-2-ts3e.onrender.com/set-song', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, song: selectedSong }),
@@ -169,7 +169,7 @@ export function MediaControlCard({ email }) {
 
   const handleSelectSong = async () => {
     if (!song) return;
-    await fetch('http://localhost:5000/set-song', {
+    await fetch('https://blog-platform-2-ts3e.onrender.com/set-song', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, song }),
@@ -234,7 +234,7 @@ export function PostCliend({image , title , description , ownerEmail , postId , 
   const currentUserEmail = localStorage.getItem('userEmail');
 
   const storageKey = `likes_${title.replace(/\s+/g, '_').toLowerCase()}`
-  const postUrl = `http://yourblog.com/posts/${title.replace(/\s+/g, '-').toLowerCase()}`
+  const postUrl = `https://blog-platform-2-ts3e.onrender.com/posts/${title.replace(/\s+/g, '-').toLowerCase()}`
 
   const handleDelete = async () => {
     const confirm = window.confirm('Are you sure to delete this post?');
@@ -242,7 +242,7 @@ export function PostCliend({image , title , description , ownerEmail , postId , 
 
     try{
       console.log('Deleting the post' , postId)
-      await axios.delete(`http://localhost:5000/posts/${postId}`, {
+      await axios.delete(`https://blog-platform-2-ts3e.onrender.com/posts/${postId}`, {
         data: { email: ownerEmail } 
       });
       alert('Post deleted successfully');
