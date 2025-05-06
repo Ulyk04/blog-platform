@@ -22,6 +22,7 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
+import PauseIcon from '@mui/icons-material/PauseCircle'
 
 
 
@@ -117,46 +118,114 @@ export default function MediaCard() {
     
   );
 }
+export function MediaControlCard({ email }) {
+  const [searchInput, setSearchInput] = React.useState('');
+  const [song, setSong] = React.useState(null);
+  const [isPlaying, setIsPlaying] = React.useState(false);
+  const audioRef = React.useRef(null);
 
-export function MediaControlCard() {
-    const theme = useTheme();
-  
-    return (
-      <Card sx={{ display: 'flex' }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <CardContent sx={{ flex: '1 0 auto'  , marginLeft: 10}}>
-            <Typography component="div" variant="h5">
-              Live From Space
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              component="div"
-              sx={{ color: 'text.secondary' }}
-            >
-              Mac Miller
-            </Typography>
-          </CardContent>
-          <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 , marginLeft: 10 }}>
-            <IconButton aria-label="previous">
-              {theme.direction === 'rtl' ? <SkipNextIcon /> : <SkipPreviousIcon />}
-            </IconButton>
-            <IconButton aria-label="play/pause">
-              <PlayArrowIcon sx={{ height: 38, width: 38 }} />
-            </IconButton>
-            <IconButton aria-label="next">
-              {theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}
-            </IconButton>
-          </Box>
-        </Box>
+  React.useEffect(() => {
+    if (!email) return;
+    const fetchSavedSong = async () => {
+      const response = await fetch(`http://localhost:5000/get-song?email=${email}`);
+      if (response.ok) {
+        const data = await response.json();
+        setSong(data.song); // теперь отобразим эту песню ниже
+      }
+    };
+    fetchSavedSong();
+  }, [email]);
+
+  const handleSearch = async () => {
+    const response = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(searchInput)}&entity=song&limit=1`);
+    const data = await response.json();
+    if (data.results.length > 0) {
+      const result = data.results[0];
+      const selectedSong = {
+        title: result.trackName,
+        artist: result.artistName,
+        src: result.previewUrl,
+        cover: result.artworkUrl100.replace('100x100bb.jpg', '300x300bb.jpg'),
+      };
+      setSong(selectedSong);
+
+      await fetch('http://localhost:5000/set-song', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, song: selectedSong }),
+      });
+    }
+  };
+
+  const handlePlayPause = () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleSelectSong = async () => {
+    if (!song) return;
+    await fetch('http://localhost:5000/set-song', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, song }),
+    });
+    alert('Music is saved in your profile');
+  };
+
+  return (
+    <Card sx={{ display: 'flex', alignItems: 'center', p: 2 }}>
+      <Box sx={{ flex: 1 }}>
+        <TextField
+          label="Search song"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+          fullWidth
+        />
+
+        {song && (
+          <>
+            <CardContent>
+              <Typography variant="h5">{song.title}</Typography>
+              <Typography variant="subtitle1" color="text.secondary">{song.artist}</Typography>
+            </CardContent>
+
+            <Box sx={{ display: 'flex', alignItems: 'center', ml: 1 }}>
+              <IconButton onClick={handlePlayPause}>
+                {isPlaying ? <PauseIcon sx={{ height: 38, width: 38 }} /> : <PlayArrowIcon sx={{ height: 38, width: 38 }} />}
+              </IconButton>
+              <Button 
+                variant="contained" 
+                color="primary" 
+                onClick={handleSelectSong}
+                sx={{ mt: 1, ml: 2 }}
+              >
+                Select this music 
+              </Button>
+            </Box>
+
+            <audio ref={audioRef} src={song.src} onEnded={() => setIsPlaying(false)} />
+          </>
+        )}
+      </Box>
+
+      {song && (
         <CardMedia
           component="img"
-          sx={{ width: 151 , marginLeft: 70 }}
-          image={Live}
-          alt="Live from space album cover"
+          sx={{ width: 151, ml: 2 }}
+          image={song.cover}
+          alt="Album cover"
         />
-      </Card>
-    );
-  }
+      )}
+    </Card>
+  );
+}
+
 
 export function PostCliend({image , title , description , ownerEmail , postId , onDelete}) {
 
