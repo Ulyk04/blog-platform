@@ -28,7 +28,7 @@ export default function CreatePostForm({ userEmail }) {
     formData.append('email', email); 
 
     try {
-      const response = await axios.post('http://localhost:5000/posts', formData);
+      const response = await axios.post('https://blog-platform-2-ts3e.onrender.com/posts', formData);
       alert('Post created!');
       console.log(response.data);
       
