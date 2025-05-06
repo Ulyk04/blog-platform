@@ -68,7 +68,11 @@ npm start
   ![Screenshots](https://raw.githubusercontent.com/Ulyk04/blog-platform/main/images/trias3.jpeg)
   ![Screenshots](https://raw.githubusercontent.com/Ulyk04/blog-platform/main/images/trias4.jpeg)
   ![Screenshots](https://raw.githubusercontent.com/Ulyk04/blog-platform/main/images/trias5.jpeg)
-  
+
+
+## 🚀 [View Live Website]
+
+   https://blog-platform-3.onrender.com
 
 ## License
 
