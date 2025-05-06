@@ -59,6 +59,15 @@ npm start
   Update your profile image and description in the settings.
   
   Switch themes from the settings menu to change the visual style of the platform
+
+## 📸 Screenshots
+
+  ![Screenshots](https://raw.githubusercontent.com/Ulyk04/blog-platform/main/images/trias.png)
+  ![Screenshots](https://raw.githubusercontent.com/Ulyk04/blog-platform/main/images/trias.jpeg)
+  ![Screenshots](https://raw.githubusercontent.com/Ulyk04/blog-platform/main/images/trias2.jpeg)
+  ![Screenshots](https://raw.githubusercontent.com/Ulyk04/blog-platform/main/images/trias3.jpeg)
+  ![Screenshots](https://raw.githubusercontent.com/Ulyk04/blog-platform/main/images/trias4.jpeg)
+  ![Screenshots](https://raw.githubusercontent.com/Ulyk04/blog-platform/main/images/trias5.jpeg)
   
 
 ## License
