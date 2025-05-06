@@ -49,7 +49,7 @@ app.post('/', (req, res) => {
     return res.status(400).json({ message: 'This user is already registered' });
   }
 
-  const NewUser = { email, password };
+  const NewUser = { email, password , song: null };
   USING.push(NewUser);
   Saving(USING);
 
@@ -141,6 +141,34 @@ app.delete('/posts/:id' , (req , res) => {
 
   res.status(200).json({message: 'Post deleted succefully'})
 })
+
+app.post('/set-song', (req, res) => {
+  const { email, song } = req.body;
+  const users = Loading();
+
+  const userIndex = users.findIndex((u) => u.email === email);
+  if (userIndex === -1) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  users[userIndex].song = song;
+  Saving(users);
+  res.status(200).json({ message: 'Song saved successfully' });
+});
+
+
+app.get('/get-song', (req, res) => {
+  const email = req.query.email;
+  const users = Loading();
+
+  const user = users.find((u) => u.email === email);
+  if (!user || !user.song) {
+    return res.status(404).json({ message: 'No song found' });
+  }
+
+  res.status(200).json({ song: user.song });
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
