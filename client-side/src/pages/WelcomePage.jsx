@@ -38,7 +38,7 @@ const SignUpPage = () => {
         const password = formData.get('password');
 
         try{
-            const res = await axios.post('http://localhost:5000' , {
+            const res = await axios.post('https://blog-platform-2-ts3e.onrender.com' , {
                 email , password
             });
             alert(res.data.message)
