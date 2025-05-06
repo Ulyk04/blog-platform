@@ -9,13 +9,13 @@ export default function FilredPosts() {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/posts');
+      const response = await axios.get('https://blog-platform-2-ts3e.onrender.com/posts');
       const postsData = response.data;
 
       
       const formattedPosts = postsData.map((post) => ({
         ...post,
-        image: post.image ? `http://localhost:5000${post.image}` : '',
+        image: post.image ? `https://blog-platform-2-ts3e.onrender.com${post.image}` : '',
       }));
 
       const mail = localStorage.getItem('userEmail');
