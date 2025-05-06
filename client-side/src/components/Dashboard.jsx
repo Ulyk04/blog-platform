@@ -74,7 +74,8 @@ export default function DashboardLayoutBasic(props) {
 
   const router = useDemoRouter('/dashboard');
 
-  
+  const gmail = localStorage.getItem('userEmail')
+
   const demoWindow = window ? window() : undefined;
 
   return (
@@ -109,7 +110,7 @@ export default function DashboardLayoutBasic(props) {
               <Grid size={11}>
                 {
                   router.pathname === '/profile' && (
-                    <MediaControlCard/>
+                    <MediaControlCard email={gmail} />
                   )
                 }
               </Grid>
