@@ -26,7 +26,7 @@ const upload = multer({ storage });
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // отдавать картинки по ссылке
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); 
 
 
 function Loading() {
